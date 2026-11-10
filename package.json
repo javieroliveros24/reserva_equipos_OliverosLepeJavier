@@ -1,0 +1,31 @@
+{
+  "name": "reserva-equipos",
+  "version": "1.0.0",
+  "description": "Práctica UD2 y UD3 de DWES: sistema de reserva de equipos informáticos con Express, EJS y sesiones",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "dev": "node --watch --env-file-if-exists=.env src/server.js",
+    "test": "vitest run",
+    "ts:build": "tsc -p ts",
+    "ts:demo": "tsc -p ts && node ts/dist/demo.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "express-session": "^1.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "supertest": "^7.1.0",
+    "typescript": "^5.8.0",
+    "vitest": "^5.1.0"
+  }
+}
