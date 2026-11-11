@@ -1,0 +1,18 @@
+{
+  // Configuración del núcleo tipado. Se compila con: npm run ts:build
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "rootDir": "src-ts",
+    "outDir": "dist",
+    "strict": true,
+    "noEmitOnError": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src-ts/**/*.ts"]
+}
