@@ -1,3 +1,4 @@
+#https://gemini.google.com/app/93c12581cbb59759?utm_source=app_launcher&utm_medium=owned&utm_campaign=base_all
 # Sistema de reserva de equipos informáticos
 
 Práctica de las unidades 2 y 3 de **Desarrollo Web en Entorno Servidor**.
