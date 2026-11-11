@@ -1,0 +1,28 @@
+<%- include('../parciales/cabecera', { titulo }) %>
+
+<section class="tarjeta">
+  <dl class="datos">
+    <dt>Código</dt><dd><%= equipo.codigo %></dd>
+    <dt>Nombre</dt><dd><%= equipo.nombre %></dd>
+    <dt>Tipo</dt><dd><%= etiquetaTipo(equipo.tipo) %></dd>
+    <dt>Estado</dt><dd><%- include('../parciales/estadoEquipo', { estado: equipo.estado }) %></dd>
+  </dl>
+</section>
+
+<h2>Próximos turnos ocupados</h2>
+<% if (equipo.estado !== 'operativo') { %>
+  <p>Este equipo está fuera de servicio y ahora mismo no se puede reservar.</p>
+<% } else if (ocupados.length === 0) { %>
+  <p>No tiene reservas próximas: está libre en todos los turnos.</p>
+<% } else { %>
+  <ul>
+    <% ocupados.forEach((hueco) => { %>
+      <li><%= formatearFecha(hueco.fecha) %> · <%= etiquetaTurno(hueco.turno) %></li>
+    <% }) %>
+  </ul>
+  <p class="nota">Los demás días y turnos está libre.</p>
+<% } %>
+
+<p><a href="/equipos">← Volver al catálogo</a></p>
+
+<%- include('../parciales/pie') %>

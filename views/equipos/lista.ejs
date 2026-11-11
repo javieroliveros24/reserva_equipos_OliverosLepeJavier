@@ -1,0 +1,60 @@
+<%- include('../parciales/cabecera', { titulo }) %>
+
+<section class="tarjeta">
+  <h2>Filtrar</h2>
+  <%# Formulario GET: los filtros van en la URL (?tipo=portatil&operativos=true). %>
+  <form method="get" action="/equipos" class="fila">
+    <label for="tipo">Tipo</label>
+    <select id="tipo" name="tipo">
+      <option value="todos" <%= filtros.tipo === 'todos' ? 'selected' : '' %>>Todos</option>
+      <option value="portatil" <%= filtros.tipo === 'portatil' ? 'selected' : '' %>>Portátil</option>
+      <option value="sobremesa" <%= filtros.tipo === 'sobremesa' ? 'selected' : '' %>>Sobremesa</option>
+    </select>
+
+    <label>
+      <input type="checkbox" name="operativos" value="true" <%= filtros.operativos ? 'checked' : '' %>>
+      Solo operativos
+    </label>
+
+    <button type="submit">Aplicar</button>
+  </form>
+
+  <%# Cookie de preferencias: se recuerda en el navegador y sirve como filtro inicial. %>
+  <form method="post" action="/preferencias/tipo" class="fila pequena">
+    <label for="preferencia">Mi tipo preferido</label>
+    <select id="preferencia" name="tipo">
+      <option value="ninguna" <%= preferencia === 'ninguna' ? 'selected' : '' %>>Sin preferencia</option>
+      <option value="portatil" <%= preferencia === 'portatil' ? 'selected' : '' %>>Portátil</option>
+      <option value="sobremesa" <%= preferencia === 'sobremesa' ? 'selected' : '' %>>Sobremesa</option>
+    </select>
+    <button type="submit">Recordar</button>
+  </form>
+</section>
+
+<% if (equipos.length === 0) { %>
+  <p>No hay equipos que cumplan los filtros.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr><th>Código</th><th>Nombre</th><th>Tipo</th><th>Estado</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% equipos.forEach((equipo) => { %>
+        <tr>
+          <td><%= equipo.codigo %></td>
+          <td><%= equipo.nombre %></td>
+          <td><%= etiquetaTipo(equipo.tipo) %></td>
+          <td><%- include('../parciales/estadoEquipo', { estado: equipo.estado }) %></td>
+          <td><a href="/equipos/<%= equipo.id %>">Ver ficha</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<p class="nota">
+  ¿Quieres reservar? La disponibilidad depende de la fecha y el turno:
+  consúltala en <a href="/reservas/nueva">Nueva reserva</a>.
+</p>
+
+<%- include('../parciales/pie') %>

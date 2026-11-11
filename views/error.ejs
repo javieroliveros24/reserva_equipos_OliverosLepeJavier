@@ -1,0 +1,17 @@
+<%- include('parciales/cabecera', { titulo }) %>
+
+<%# Página de error genérica. Solo mostramos un mensaje pensado para el usuario,
+    nunca la traza ni detalles internos del servidor. %>
+<section class="tarjeta error">
+  <p class="codigo-error"><%= estado %></p>
+  <p><%= mensaje %></p>
+</section>
+
+<p>
+  <% if (estado === 403 && !locals.usuarioActual) { %>
+    <a href="/login">Iniciar sesión</a> ·
+  <% } %>
+  <a href="/equipos">Volver al catálogo</a>
+</p>
+
+<%- include('parciales/pie') %>

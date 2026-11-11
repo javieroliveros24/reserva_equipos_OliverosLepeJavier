@@ -1,0 +1,37 @@
+<%- include('../parciales/cabecera', { titulo }) %>
+
+<% if (reservas.length === 0) { %>
+  <p>Todavía no has hecho ninguna reserva. <a href="/reservas/nueva">Haz la primera</a>.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr><th>N.º</th><th>Equipo</th><th>Fecha</th><th>Turno</th><th>Estado</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% reservas.forEach((reserva) => { %>
+        <tr class="<%= reserva.estado === 'cancelada' ? 'apagada' : '' %>">
+          <td><%= reserva.id %></td>
+          <td><%= reserva.equipoCodigo %> · <%= reserva.equipoNombre %></td>
+          <td><%= formatearFecha(reserva.fecha) %></td>
+          <td><%= etiquetaTurno(reserva.turno) %></td>
+          <td><%= etiquetaEstadoReserva(reserva.estado) %></td>
+          <td>
+            <%# El botón solo aparece si se puede cancelar, pero el servidor lo comprueba igualmente. %>
+            <% if (reserva.puedeCancelar) { %>
+              <form method="post" action="/reservas/<%= reserva.id %>/cancelar" class="en-linea">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="peligro">Cancelar</button>
+              </form>
+            <% } else if (reserva.estado === 'activa') { %>
+              <span class="nota">Ya pasada</span>
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<p><a class="boton" href="/reservas/nueva">Nueva reserva</a></p>
+
+<%- include('../parciales/pie') %>

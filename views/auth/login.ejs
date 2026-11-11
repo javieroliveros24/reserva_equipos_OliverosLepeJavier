@@ -1,0 +1,22 @@
+<%- include('../parciales/cabecera', { titulo }) %>
+
+<% if (sesionCerrada) { %>
+  <p class="aviso" role="status">Has cerrado sesión correctamente.</p>
+<% } %>
+
+<%- include('../parciales/errores', { errores }) %>
+
+<%# La contraseña nunca se vuelve a rellenar: el campo siempre sale vacío. %>
+<form method="post" action="/login" class="tarjeta formulario">
+  <label for="email">Correo electrónico</label>
+  <input type="email" id="email" name="email" value="<%= email %>" maxlength="254" required autocomplete="username">
+
+  <label for="password">Contraseña</label>
+  <input type="password" id="password" name="password" maxlength="200" required autocomplete="current-password">
+
+  <button type="submit">Entrar</button>
+</form>
+
+<p>¿No tienes cuenta? <a href="/registro">Regístrate</a>.</p>
+
+<%- include('../parciales/pie') %>

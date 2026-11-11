@@ -1,0 +1,19 @@
+<%- include('parciales/cabecera', { titulo }) %>
+
+<%# "usuario" llega sin passwordHash: el servicio solo nos da id, nombre, email y rol. %>
+<section class="tarjeta">
+  <dl class="datos">
+    <dt>Nombre</dt><dd><%= usuario.nombre %></dd>
+    <dt>Correo</dt><dd><%= usuario.email %></dd>
+    <dt>Rol</dt><dd><%= usuario.rol === 'admin' ? 'Administrador' : 'Usuario' %></dd>
+    <dt>Reservas activas</dt><dd><%= totalActivas %></dd>
+    <dt>Reservas canceladas</dt><dd><%= totalCanceladas %></dd>
+  </dl>
+</section>
+
+<p>
+  <a class="boton" href="/reservas/nueva">Hacer una reserva</a>
+  <a class="boton secundario" href="/mis-reservas">Ver mis reservas</a>
+</p>
+
+<%- include('parciales/pie') %>

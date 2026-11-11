@@ -1,0 +1,11 @@
+<%# Lista de errores de un formulario. Recibe "errores": un array de textos. %>
+<% if (locals.errores && errores.length > 0) { %>
+  <div class="errores" role="alert">
+    <p><strong>Revisa lo siguiente:</strong></p>
+    <ul>
+      <% errores.forEach((error) => { %>
+        <li><%= error %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>

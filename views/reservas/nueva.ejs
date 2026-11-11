@@ -1,0 +1,61 @@
+<%- include('../parciales/cabecera', { titulo: vm.titulo }) %>
+
+<%- include('../parciales/errores', { errores: vm.errores }) %>
+
+<%#
+  Paso 1: elegir fecha y turno. Es un formulario GET: al pulsar el botón se
+  vuelve a pedir la página y el servidor calcula qué equipos quedan libres.
+  Así no necesitamos JavaScript en el navegador.
+%>
+<section class="tarjeta">
+  <h2>1. ¿Cuándo lo necesitas?</h2>
+  <form method="get" action="/reservas/nueva" class="fila">
+    <label for="fecha">Fecha</label>
+    <input type="date" id="fecha" name="fecha" value="<%= vm.fecha %>" min="<%= vm.fechaMinima %>" required>
+
+    <label for="turno">Turno</label>
+    <select id="turno" name="turno" required>
+      <% vm.opcionesTurno.forEach((opcion) => { %>
+        <option value="<%= opcion.valor %>" <%= opcion.seleccionado ? 'selected' : '' %>><%= opcion.texto %></option>
+      <% }) %>
+    </select>
+
+    <button type="submit">Ver equipos libres</button>
+  </form>
+</section>
+
+<%#
+  Paso 2: elegir el equipo. Solo salen los equipos libres para ese hueco,
+  pero el servidor lo volverá a comprobar todo al recibir el POST.
+  La fecha y el turno van en campos ocultos; si alguien los cambia a mano,
+  el servidor también los valida. El usuario NO va en el formulario: sale de la sesión.
+%>
+<section class="tarjeta">
+  <h2>2. Elige el equipo</h2>
+
+  <% if (!vm.consultaValida) { %>
+    <p>Indica primero una fecha y un turno válidos.</p>
+  <% } else if (!vm.puedeEnviar) { %>
+    <p>No quedan equipos libres para el <%= vm.resumen %>. Prueba con otra fecha o turno.</p>
+  <% } else { %>
+    <p>Equipos libres para el <strong><%= vm.resumen %></strong>:</p>
+
+    <form method="post" action="/reservas" class="formulario">
+      <input type="hidden" name="_csrf" value="<%= vm.csrfToken %>">
+      <input type="hidden" name="fecha" value="<%= vm.fecha %>">
+      <input type="hidden" name="turno" value="<%= vm.turno %>">
+
+      <label for="equipoId">Equipo</label>
+      <select id="equipoId" name="equipoId" required>
+        <option value="">-- Elige un equipo --</option>
+        <% vm.opcionesEquipo.forEach((opcion) => { %>
+          <option value="<%= opcion.valor %>" <%= opcion.seleccionado ? 'selected' : '' %>><%= opcion.texto %></option>
+        <% }) %>
+      </select>
+
+      <button type="submit">Confirmar reserva</button>
+    </form>
+  <% } %>
+</section>
+
+<%- include('../parciales/pie') %>

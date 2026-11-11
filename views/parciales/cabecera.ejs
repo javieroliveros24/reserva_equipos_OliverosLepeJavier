@@ -1,0 +1,44 @@
+<%#
+  Parcial de cabecera: se incluye al principio de todas las páginas.
+  Recibe "titulo". Usa usuarioActual y csrfToken, que vienen de res.locals.
+  Usamos locals.xxx para las variables que pueden no existir; si escribiéramos
+  la variable directamente y no estuviera definida, EJS daría error.
+  Recuerda: la etiqueta con "=" escapa el texto (segura para datos del usuario)
+  y la etiqueta con "-" no escapa (solo la usamos para include, que es HTML nuestro).
+%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= titulo %> · Reserva de equipos</title>
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <header class="barra">
+    <a class="marca" href="/equipos">💻 Reserva de equipos</a>
+    <nav>
+      <a href="/equipos">Equipos</a>
+      <% if (locals.usuarioActual) { %>
+        <a href="/reservas/nueva">Nueva reserva</a>
+        <a href="/mis-reservas">Mis reservas</a>
+        <% if (usuarioActual.rol === "admin") { %>
+          <a href="/admin/equipos">Admin: equipos</a>
+          <a href="/admin/reservas">Admin: reservas</a>
+        <% } %>
+        <a href="/perfil">👤 <%= usuarioActual.nombre %></a>
+        <%# El logout es un formulario POST con token CSRF, no un enlace. %>
+        <form method="post" action="/logout" class="en-linea">
+          <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+          <button type="submit" class="boton-enlace">Cerrar sesión</button>
+        </form>
+      <% } else { %>
+        <a href="/login">Iniciar sesión</a>
+        <a href="/registro">Crear cuenta</a>
+      <% } %>
+    </nav>
+  </header>
+
+  <main>
+    <%- include('avisos') %>
+    <h1><%= titulo %></h1>

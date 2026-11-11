@@ -1,0 +1,57 @@
+<%- include('../parciales/cabecera', { titulo }) %>
+
+<section class="tarjeta">
+  <h2>Añadir equipo</h2>
+  <%- include('../parciales/errores', { errores }) %>
+
+  <form method="post" action="/admin/equipos" class="formulario">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+    <label for="codigo">Código</label>
+    <input type="text" id="codigo" name="codigo" value="<%= valores.codigo %>" placeholder="PORT-003" maxlength="12" required>
+
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" value="<%= valores.nombre %>" minlength="3" maxlength="80" required>
+
+    <label for="tipo">Tipo</label>
+    <select id="tipo" name="tipo" required>
+      <option value="">-- Elige --</option>
+      <option value="sobremesa" <%= valores.tipo === 'sobremesa' ? 'selected' : '' %>>Sobremesa</option>
+      <option value="portatil" <%= valores.tipo === 'portatil' ? 'selected' : '' %>>Portátil</option>
+    </select>
+
+    <button type="submit">Añadir</button>
+  </form>
+</section>
+
+<h2>Equipos</h2>
+<table>
+  <thead>
+    <tr><th>Código</th><th>Nombre</th><th>Tipo</th><th>Estado</th><th>Cambiar estado</th></tr>
+  </thead>
+  <tbody>
+    <% equipos.forEach((equipo) => { %>
+      <tr>
+        <td><%= equipo.codigo %></td>
+        <td><%= equipo.nombre %></td>
+        <td><%= etiquetaTipo(equipo.tipo) %></td>
+        <td><%- include('../parciales/estadoEquipo', { estado: equipo.estado }) %></td>
+        <td>
+          <%# Un botón que cambia al estado contrario del actual. %>
+          <form method="post" action="/admin/equipos/<%= equipo.id %>/estado" class="en-linea">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <% if (equipo.estado === 'operativo') { %>
+              <input type="hidden" name="estado" value="fuera_de_servicio">
+              <button type="submit" class="peligro">Poner fuera de servicio</button>
+            <% } else { %>
+              <input type="hidden" name="estado" value="operativo">
+              <button type="submit">Poner operativo</button>
+            <% } %>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('../parciales/pie') %>

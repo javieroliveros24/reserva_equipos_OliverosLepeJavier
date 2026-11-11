@@ -1,0 +1,99 @@
+/* Estilos sencillos para que la aplicación se vea ordenada. */
+
+:root {
+  --azul: #1d4ed8;
+  --gris: #f3f4f6;
+  --borde: #d1d5db;
+  --texto: #1f2937;
+  --verde: #15803d;
+  --rojo: #b91c1c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--texto);
+  background: #fafafa;
+  line-height: 1.5;
+}
+
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--azul);
+}
+.barra a, .barra .boton-enlace { color: #fff; text-decoration: none; }
+.barra nav { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.marca { font-weight: bold; font-size: 1.1rem; }
+
+main { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
+
+.pie { text-align: center; color: #6b7280; font-size: 0.85rem; padding: 2rem 0; }
+
+.tarjeta {
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.formulario { display: grid; gap: 0.4rem; max-width: 420px; }
+.formulario button { margin-top: 0.6rem; justify-self: start; }
+.fila { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+.pequena { margin-top: 0.75rem; font-size: 0.9rem; }
+.en-linea { display: inline; margin: 0; }
+
+input, select, button { font: inherit; padding: 0.35rem 0.6rem; }
+input, select { border: 1px solid var(--borde); border-radius: 4px; }
+
+button, .boton {
+  background: var(--azul);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.boton { padding: 0.4rem 0.9rem; }
+.boton.secundario { background: #4b5563; }
+button.peligro { background: var(--rojo); }
+.boton-enlace { background: none; padding: 0; text-decoration: underline; }
+
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid var(--borde); }
+th { background: var(--gris); }
+tr.apagada td { color: #9ca3af; }
+
+.etiqueta { padding: 0.1rem 0.5rem; border-radius: 999px; font-size: 0.85rem; color: #fff; }
+.etiqueta.verde { background: var(--verde); }
+.etiqueta.roja { background: var(--rojo); }
+
+.aviso {
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+}
+.errores {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+.errores ul { margin: 0.25rem 0 0; }
+
+.datos { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1rem; margin: 0; }
+.datos dt { font-weight: bold; }
+.datos dd { margin: 0; }
+
+.nota { color: #6b7280; font-size: 0.9rem; }
+.codigo-error { font-size: 2.5rem; font-weight: bold; margin: 0; color: var(--rojo); }
